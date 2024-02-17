@@ -8,7 +8,8 @@ from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
 
 if __name__ == '__main__':
-    img = Image.open('C:/Users/Mitch Jones/Desktop/Coding/CapstonePrototye/images/GrenoraCropped.jpg')
+    img = Image.open('.\images\GrenoraCropped.jpg') 
+    # now relative address, still need to find way to not hard-code what image
     gray = np.array(img.convert('L'))
     blur = gaussian_blur2(gray, 1, (40, 40))
     # Might need to change sigma to 1, the image might still be too blurry

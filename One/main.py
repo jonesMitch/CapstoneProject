@@ -9,9 +9,10 @@ from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
 
+
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-    img = Image.open('./images/RayCropped.jpg') 
+    img = Image.open('./images/testimage.jpg') 
     # now relative address, still need to find way to not hard-code what image
     gray = np.array(img.convert('L'))
     blur = gaussian_blur2(gray, 1, (40, 40))

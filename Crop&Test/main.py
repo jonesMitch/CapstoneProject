@@ -10,6 +10,17 @@ from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
 
+import requests
+from bs4 import BeautifulSoup
+
+# relevant URLs
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Fargo_NE_SnowStake.jpg
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Clyde_NW_SnowStake.jpg
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Clyde_South_SnowStake.jpg
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Ray_SE_SnowStake.jpg
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Prosper_South_SnowStake.jpg
+# https://s3.us-east-2.amazonaws.com/ndawn.info/station_photos/snow/Prosper_NE_SnowStake.jpg
+#
 def getYintercept(x1, y1, x2, y2):
     m = (y2-y1)/(x2-x1)
     b = y1 - m*(x1)
@@ -39,6 +50,8 @@ def getBLine(x1, y1, x2, y2):
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
     #path always needed when using tesseract
+    #scrape for station here
+    #scrape for image here
     srcD = '.\images\\'
     for file in os.scandir(srcD):
         filename = file.path

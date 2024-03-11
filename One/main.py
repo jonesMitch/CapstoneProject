@@ -2,11 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
+import cv2
+import pytesseract
 
 from Guassian_Blur import gaussian_blur2
 from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
+
 
 if __name__ == '__main__':
     srcD = '.\images\\'
@@ -34,6 +37,9 @@ if __name__ == '__main__':
         plt.show(block=True)
         
     #img = Image.open('.\images\GrenoraCropped.jpg')
+    #pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+    #img = Image.open('./images/testimage.jpg') 
+    
     # now relative address, still need to find way to not hard-code what image
     #gray = np.array(img.convert('L'))
     #blur = gaussian_blur2(gray, 1, (40, 40))
@@ -42,6 +48,15 @@ if __name__ == '__main__':
     #nms = non_maximum_suppression(gradient, theta)
     #th = threshold(nms, 0.05, 0.09)
 
+    # i commented out some stuff just to test various things
     #plt.figure()
     #plt.imshow(nms, cmap='gray')
-    #plt.show(True)
+    #plt.show()
+
+    #pytesseract below?
+    #data = pytesseract.image_to_string(img, lang='eng',config='--psm 6')
+    #print(data)
+
+    #img2 = cv2.imread('./images/GrenoraCropped.jpg')
+    #text = pytesseract.image_to_string(img2)
+    #print(text)

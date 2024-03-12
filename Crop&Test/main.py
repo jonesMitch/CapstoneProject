@@ -117,9 +117,14 @@ if __name__ == '__main__':
         #cv2.waitKey(0)
         #cv2.destroyAllWindows()
         data = pytesseract.image_to_string(mask, lang='eng',config='--psm 6')
-        nums = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=/:;".,<>?—~|\[]{} \''})
+        nums = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvwxyz!@£”#$é%^&*()-_+=/:;".,<>?—~|\°[]{} \''})
+        numList = []
         #stupid hardcoding here to remove all non-number characters from string
-        print(nums)
+        for int in nums:
+            numList.append(int)
+        print(numList)
+        #depth = min(numList)
+        #print(depth)
         
     #img = Image.open('.\images\GrenoraCropped.jpg')
     # now relative address, still need to find way to not hard-code what image

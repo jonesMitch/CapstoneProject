@@ -12,7 +12,7 @@ from Thresholding import threshold
 
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-    img = Image.open('./images/testimage.jpg') 
+    img = Image.open('./images/Ray_SE_SnowStake_manuf.png') 
     # now relative address, still need to find way to not hard-code what image
     gray = np.array(img.convert('L'))
     blur = gaussian_blur2(gray, 1, (40, 40))

@@ -117,11 +117,14 @@ if __name__ == '__main__':
         #cv2.waitKey(0)
         #cv2.destroyAllWindows()
         data = pytesseract.image_to_string(mask, lang='eng',config='--psm 6')
-        nums = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvwxyz!@£”#$é%^&*()-_+=/:;".,<>?—~|\°[]{} \''})
+        noLet = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvw‘xyz!@£”#$é%“^&*()-_+=/:;".,<>?—~|\°[]{} \''})
+        nums = noLet.replace('\n', ' ').replace('\r', '')
+        controlList = [30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         numList = []
         #stupid hardcoding here to remove all non-number characters from string
-        for int in nums:
-            numList.append(int)
+        for number in nums:
+            intNum = int(number)
+            numList.append(intNum)
         print(numList)
         #depth = min(numList)
         #print(depth)

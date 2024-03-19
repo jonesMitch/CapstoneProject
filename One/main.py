@@ -90,11 +90,9 @@ if __name__ == '__main__':
                 cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             crop = img[0:img.shape[0], minX:maxX]
             cv2.imshow('Crop', crop)
-
-        
-        
-        cv2.imshow('Canny', canny)        
+     
         cv2.imshow('Mask', mask)
+        cv2.imshow('Canny', canny)
         cv2.imshow('Lines', img)
         cv2.imshow('Image', hsv)
         cv2.imshow('Blur', blur)
@@ -102,20 +100,3 @@ if __name__ == '__main__':
         cv2.imshow('Dilation', dilation)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-        
-    #img = Image.open('.\images\GrenoraCropped.jpg')
-    # now relative address, still need to find way to not hard-code what image
-    #gray = np.array(img.convert('L'))
-    #blur = gaussian_blur2(gray, 1, (40, 40))
-    # Might need to change sigma to 1, the image might still be too blurry
-    #gradient, theta = sobel_filter(blur, 1.5, (10, 10))
-    #nms = non_maximum_suppression(gradient, theta)
-    #th = threshold(nms, 0.05, 0.09)
-
-    #plt.figure()
-    #plt.imshow(nms, cmap='gray')
-    #plt.show(block=True)
-        
-    #contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    #cv2.drawContours(img, contours, -1, (0,255,0), 3)
-    #cv2.imshow('contours', img)

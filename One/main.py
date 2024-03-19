@@ -91,12 +91,12 @@ if __name__ == '__main__':
             crop = img[0:img.shape[0], minX:maxX]
             cv2.imshow('Crop', crop)
      
-        cv2.imshow('Mask', mask)
+        #cv2.imshow('Mask', mask)
         cv2.imshow('Canny', canny)
         cv2.imshow('Lines', img)
         cv2.imshow('Image', hsv)
-        cv2.imshow('Blur', blur)
-        cv2.imshow('Erosion', erosion)
+        #cv2.imshow('Blur', blur)
+        #cv2.imshow('Erosion', erosion)
         cv2.imshow('Dilation', dilation)
         cv2.waitKey(0)
         cv2.destroyAllWindows()

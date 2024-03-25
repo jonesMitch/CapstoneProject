@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import cv2
+import re
 import pytesseract
 from PIL import Image
 
@@ -119,13 +120,15 @@ if __name__ == '__main__':
         data = pytesseract.image_to_string(mask, lang='eng',config='--psm 6')
         noLet = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvw‘xyz!@£”#$é%“^&*()-_+=/:;".,<>?—~|\°[]{} \''})
         nums = noLet.replace('\n', ' ').replace('\r', '')
+        #stupid hardcoding here to remove all non-number characters from string
         controlList = [30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         numList = []
-        #stupid hardcoding here to remove all non-number characters from string
-        #for number in nums:
-        #    intNum = int(number)
-        #    numList.append(intNum)
-        print(nums) #replace with functional list when working
+        numList = (list(map(int, re.findall('\d+', nums))))
+        if not numList:
+            print("please use manual evaluation")
+        else:
+            depth = min(numList)
+            print(depth) #replace with functional list when working
         #depth = min(numList)
         #print(depth)
         

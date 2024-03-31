@@ -129,6 +129,7 @@ if __name__ == '__main__':
             print("Please manually evaluate at station: ")
         else:
             depth = min(numList)
+            print(numList)
             print(depth) #replace with functional list when working
         
     #img = Image.open('.\images\GrenoraCropped.jpg')

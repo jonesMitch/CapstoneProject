@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import cv2
+import re
 import pytesseract
 from PIL import Image
 
@@ -9,6 +10,9 @@ from Guassian_Blur import gaussian_blur2
 from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
+
+import requests
+from bs4 import BeautifulSoup
 
 def getSlope(x1, y1, x2, y2):
     if(x2-x1 == 0):
@@ -46,6 +50,7 @@ def getBLine(x1, y1, x2, y2):
     return x1, y1, x2, y2
 
 if __name__ == '__main__':
+    pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
     srcD = '.\images\\'
     for file in os.scandir(srcD):
@@ -57,10 +62,10 @@ if __name__ == '__main__':
 
         #Color HSV values: Blue 96-116, Orange 2-22, Green 53-73, light green 30-50
         #lower bound found by getting the HSV value of rgb then dividing the h by 2 and subtracting 10 the s and v are the standard
-        lower_blue = np.array([2, 100, 20])
+        lower_color = np.array([2, 100, 20])
         #Upper bound found by getting the HSV value of rgb then dividing the h by 2 and Adding 10 the s and v are the standard
-        upper_blue = np.array([22, 255, 255])
-        mask = cv2.inRange(hsv, lower_blue, upper_blue)
+        upper_color = np.array([22, 255, 255])
+        mask = cv2.inRange(hsv, lower_color, upper_color)
 
         kernel = np.ones((5,5), np.uint8)
         
@@ -105,7 +110,7 @@ if __name__ == '__main__':
                     minX = min(minX, x1, x2)
                     maxX = max(maxX, x1, x2)
 
-                    print(x1.__str__() + ' ' + y1.__str__() + ' ' + x2.__str__() + ' ' + y2.__str__())
+                    #print(x1.__str__() + ' ' + y1.__str__() + ' ' + x2.__str__() + ' ' + y2.__str__())
                     cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
             #print(minX.__str__() + maxX.__str__())
@@ -121,3 +126,20 @@ if __name__ == '__main__':
         cv2.imwrite(saveName + '\Dilation.jpg', dilation)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+        hsvTess = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+        tess = mask = cv2.inRange(hsvTess, lower_color, upper_color)
+        data = pytesseract.image_to_string(tess, lang='eng',config='--psm 6') #using tesseract to get text recognition
+        noLet = data.lower().translate({ord(i): None for i in 'abcdefghijklmnopqrstuvw‘xyz!@£”#$é%“^&*()-_+=/:;".,<>?—~|\°[]{} \''})
+        nums = noLet.replace('\n', ' ').replace('\r', '')
+        #hardcoding here to remove all non-number characters from string
+        controlList = [30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        #control list is numbers that should be found on full snowstake
+        numList = [] #empty list to represent numbers found on snowstake
+        numList = (list(map(int, re.findall('\d+', nums)))) #find the numbers from a given string and add them to this list
+        if not numList: #if the list is empty of elements go to manual evaluation
+            print("Please manually evaluate at station: ")
+        else:
+            depth = min(numList)
+            print(numList)
+            print(depth) #replace with functional list when working

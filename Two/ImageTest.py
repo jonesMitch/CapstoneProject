@@ -7,7 +7,8 @@ MAX_VALUE = 46
 # 1 for left / right tick marks, 0 for middle tick marks
 TICK_MARKS = 1
 
-path = 'C:/Users/Mitch Jones/Desktop/Coding/CapstonePrototye/images/GrenoraCropped.jpg'
+#path = 'C:/Users/Mitch Jones/Desktop/Coding/CapstonePrototye/images/GrenoraCropped.jpg'
+path = '.\GrenoraCropped\\'
 img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 
 edges = cv2.Canny(img, 299, 300)

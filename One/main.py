@@ -28,16 +28,16 @@ if __name__ == '__main__':
         #pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
         #img = Image.open('./images/testimage.jpg') 
         #now relative address, still need to find way to not hard-code what image
-        gray = np.array(cmg.convert('L'))
-        blur = gaussian_blur2(gray, 1, (40, 40))
+        #gray = np.array(cmg.convert('L'))
+        #blur = gaussian_blur2(gray, 1, (40, 40))
         # Might need to change sigma to 1, the image might still be too blurry
-        gradient, theta = sobel_filter(blur, 1.5, (10, 10))
-        nms = non_maximum_suppression(gradient, theta)
-        th = threshold(nms, 0.05, 0.09)
+        #gradient, theta = sobel_filter(blur, 1.5, (10, 10))
+        #nms = non_maximum_suppression(gradient, theta)
+        #th = threshold(nms, 0.05, 0.09)
 
         plt.figure()
         plt.title(filename + ' Final Result')
-        plt.imshow(nms, cmap='gray')
+        plt.imshow(cmg)
         plt.show(block=True)
 
     #pytesseract below?

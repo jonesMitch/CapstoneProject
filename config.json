@@ -1,0 +1,6 @@
+{
+    "scraper": {
+        "URL": "https://ndawn.info/snow_photos.html",
+        "frequency": 24
+    }
+}

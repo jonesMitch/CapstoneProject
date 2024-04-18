@@ -1,6 +1,7 @@
 {
     "scraper": {
         "URL": "https://ndawn.info/snow_photos.html",
+        "TestURL": "https://sites.google.com/view/testorangestake/home",
         "frequency": 24
     }
 }

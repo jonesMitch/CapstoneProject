@@ -4,10 +4,9 @@ import os
 import cv2
 import re
 import pytesseract
-from PIL import Image
-import cv2
-import pytesseract
+import json
 
+from PIL import Image
 from Guassian_Blur import gaussian_blur2
 from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
@@ -141,10 +140,24 @@ if __name__ == '__main__':
         numList = (list(map(int, re.findall('\d+', nums)))) #find the numbers from a given string and add them to this list
         if not numList: #if the list is empty of elements go to manual evaluation
             print("Please manually evaluate at station: ")
+            #Output data
+            nameJson = saveName + "Data"
+            data = {
+                "satation": saveName,
+                "inches of snow": None,
+                "needs review": True
+            }
         else:
             depth = min(numList)
             print(numList)
             print(depth) #replace with functional list when working
+            #Output data
+            nameJson = saveName + "Data"
+            data = {
+                "station": saveName,
+                "inches of snow": depth,
+                "needs review": False
+            }
 
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
@@ -169,4 +182,9 @@ if __name__ == '__main__':
     #img2 = cv2.imread('./images/GrenoraCropped.jpg')
     #text = pytesseract.image_to_string(img2)
     #print(text)
+
+    #Output
+    file = open(".\JSONs\\" + nameJson + ".json", "w")
+    json.dump(data, file, indent=3)
+    file.close()
 main

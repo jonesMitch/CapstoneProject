@@ -53,7 +53,7 @@ def getBLine(x1, y1, x2, y2):
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
-    srcD = '.\imagesNew\\'
+    srcD = '.\images\\'
     for file in os.scandir(srcD):
         filename = file.path
         print(filename)
@@ -116,17 +116,17 @@ if __name__ == '__main__':
 
             #print(minX.__str__() + maxX.__str__())
             crop = img[0:img.shape[0], minX:maxX]
-            #cv2.imwrite(saveName + '\Crop.jpg', crop)
+            cv2.imwrite(saveName + '\Crop.jpg', crop)
 
-        #cv2.imwrite(saveName + '\Mask.jpg', mask)
-        #cv2.imwrite(saveName + '\Canny.jpg', canny)
-        #cv2.imwrite(saveName + '\Lines.jpg', img)
-        #cv2.imwrite(saveName + '\Image.jpg', hsv)
-        #cv2.imwrite(saveName + '\Blur.jpg', blur)
-        #cv2.imwrite(saveName + '\Erosion.jpg', erosion)
-        #cv2.imwrite(saveName + '\Dilation.jpg', dilation)
-        #cv2.waitKey(0)
-        #cv2.destroyAllWindows()
+        cv2.imwrite(saveName + '\Mask.jpg', mask)
+        cv2.imwrite(saveName + '\Canny.jpg', canny)
+        cv2.imwrite(saveName + '\Lines.jpg', img)
+        cv2.imwrite(saveName + '\Image.jpg', hsv)
+        cv2.imwrite(saveName + '\Blur.jpg', blur)
+        cv2.imwrite(saveName + '\Erosion.jpg', erosion)
+        cv2.imwrite(saveName + '\Dilation.jpg', dilation)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         hsvTess = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
         tess = mask = cv2.inRange(hsvTess, lower_color, upper_color)
@@ -140,6 +140,7 @@ if __name__ == '__main__':
         numList = (list(map(int, re.findall('\d+', nums)))) #find the numbers from a given string and add them to this list
         if not numList: #if the list is empty of elements go to manual evaluation
             print("Please manually evaluate at station: ")
+            #Output data
             nameJson = saveName + "Data"
             data = {
                 "satation": saveName,
@@ -150,7 +151,6 @@ if __name__ == '__main__':
             depth = min(numList)
             print(numList)
             print(depth) #replace with functional list when working
-            
             #Output data
             nameJson = saveName + "Data"
             data = {
@@ -159,7 +159,32 @@ if __name__ == '__main__':
                 "needs review": False
             }
 
-        #Output
-        file = open(".\JSONs\\" + nameJson + ".json", "w")
-        json.dump(data, file, indent=3)
-        file.close()
+if __name__ == '__main__':
+    pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+    img = Image.open('./images/testimage.jpg') 
+    # now relative address, still need to find way to not hard-code what image
+    gray = np.array(img.convert('L'))
+    blur = gaussian_blur2(gray, 1, (40, 40))
+    # Might need to change sigma to 1, the image might still be too blurry
+    gradient, theta = sobel_filter(blur, 1.5, (10, 10))
+    nms = non_maximum_suppression(gradient, theta)
+    th = threshold(nms, 0.05, 0.09)
+
+    # i commented out some stuff just to test various things
+    #plt.figure()
+    #plt.imshow(nms, cmap='gray')
+    #plt.show()
+
+    #pytesseract below?
+    data = pytesseract.image_to_string(img, lang='eng',config='--psm 6')
+    print(data)
+
+    #img2 = cv2.imread('./images/GrenoraCropped.jpg')
+    #text = pytesseract.image_to_string(img2)
+    #print(text)
+
+    #Output
+    file = open(".\JSONs\\" + nameJson + ".json", "w")
+    json.dump(data, file, indent=3)
+    file.close()
+main

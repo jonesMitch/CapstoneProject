@@ -11,7 +11,6 @@ from Guassian_Blur import gaussian_blur2
 from Sobel_Filter import sobel_filter
 from Non_Maximum_Suppression import non_maximum_suppression
 from Thresholding import threshold
-from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
@@ -141,6 +140,12 @@ if __name__ == '__main__':
         numList = (list(map(int, re.findall('\d+', nums)))) #find the numbers from a given string and add them to this list
         if not numList: #if the list is empty of elements go to manual evaluation
             print("Please manually evaluate at station: ")
+            nameJson = saveName + "Data"
+            data = {
+                "satation": saveName,
+                "inches of snow": None,
+                "needs review": True
+            }
         else:
             depth = min(numList)
             print(numList)
@@ -148,14 +153,13 @@ if __name__ == '__main__':
             
             #Output data
             nameJson = saveName + "Data"
-            today = date.today().strftime("%m/%d/%Y")
             data = {
-                "station": saveName, #Station name may not always be the same as save name. Change when scraping is done
+                "station": saveName,
                 "inches of snow": depth,
-                "date": today
+                "needs review": False
             }
 
-            #Output
-            file = open(nameJson + ".json", "w")
-            json.dump(data, file, indent=3)
-            file.close()
+        #Output
+        file = open(".\JSONs\\" + nameJson + ".json", "w")
+        json.dump(data, file, indent=3)
+        file.close()

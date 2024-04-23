@@ -7,13 +7,21 @@ import pytesseract
 import json
 
 from PIL import Image
-from Guassian_Blur import gaussian_blur2
-from Sobel_Filter import sobel_filter
-from Non_Maximum_Suppression import non_maximum_suppression
-from Thresholding import threshold
+from One.Guassian_Blur import gaussian_blur2
+from One.Sobel_Filter import sobel_filter
+from One.Non_Maximum_Suppression import non_maximum_suppression
+from One.Thresholding import threshold
 
 import requests
 from bs4 import BeautifulSoup
+
+images_dir = ""
+
+def parseConfig():
+    configData
+    with open("config.json", "r") as file:
+        configData = json.load(file)
+    images_dir = configData['one']['image_dir']
 
 def getSlope(x1, y1, x2, y2):
     if(x2-x1 == 0):
@@ -50,7 +58,7 @@ def getBLine(x1, y1, x2, y2):
         x2 = xint
     return x1, y1, x2, y2
 
-if __name__ == '__main__':
+def main_run(color: int):
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
     srcD = '.\images\\'
@@ -143,7 +151,7 @@ if __name__ == '__main__':
             #Output data
             nameJson = saveName + "Data"
             data = {
-                "satation": saveName,
+                "station": saveName,
                 "inches of snow": None,
                 "needs review": True
             }
@@ -158,7 +166,15 @@ if __name__ == '__main__':
                 "inches of snow": depth,
                 "needs review": False
             }
+        file = open(".\JSONs\\" + nameJson + ".json", "w")
+        json.dump(data, file, indent=3)
+        file.close()
 
+def run():
+    parseConfig()
+    
+
+'''
 if __name__ == '__main__':
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
     img = Image.open('./images/testimage.jpg') 
@@ -186,5 +202,4 @@ if __name__ == '__main__':
     #Output
     file = open(".\JSONs\\" + nameJson + ".json", "w")
     json.dump(data, file, indent=3)
-    file.close()
-main
+    file.close()'''

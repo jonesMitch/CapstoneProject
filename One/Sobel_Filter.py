@@ -1,5 +1,5 @@
 import numpy as np
-from Guassian_Blur import convolution
+from One.Guassian_Blur import convolution
 
 def sobel_filter(img: np.ndarray, sigma: int | float, filter_shape: int):
     xKernel = np.array(

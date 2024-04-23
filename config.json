@@ -3,5 +3,8 @@
         "URL": "https://ndawn.info/snow_photos.html",
         "TestURL": "https://sites.google.com/view/testorangestake/home",
         "frequency": 24
+    },
+    "one": {
+        "image_dir": ".\\test_images\\"
     }
 }

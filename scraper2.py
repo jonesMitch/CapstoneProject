@@ -17,7 +17,7 @@ def scrape():
 
 def save_img(url: str, name: str):
     data = requests.get(url).content
-    img = open(f'test_images/{name}.jpg', 'wb')
+    img = open(f'test_images/{"green" if name==0 else "orang"}.jpg', 'wb')
     img.write(data)
     img.close
 
